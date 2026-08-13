@@ -1,0 +1,38 @@
+==================== 2026-08-13T03:18:10.258375Z | 019ff920-9644-72f3-ac0c-c452874916de ====================
+03:18:10.261180 [info ]: Installing dbt project and profile setup
+03:18:10.269132 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+03:18:10.270409 [info ]: Success Project created successfully!
+03:18:10.270673 [info ]: Info Project name: jaffle_shop
+03:18:10.270696 [info ]: Info Project directory: jaffle_shop
+03:18:13.601608 [info ]: Info Setting up your profile...
+03:18:13.604907 [info ]: Loading ~/.dbt/profiles.yml
+03:18:13.613896 [info ]: Profile 'jaffle_shop' already exists. You can choose how to proceed.
+03:18:16.549177 [info ]: Info Creating new profile...
+03:18:44.405913 [info ]: Info Backup created at /Users/alecmacmillen/.dbt/profiles.yml.bkp
+03:18:44.407328 [info ]: Success Profile written to /Users/alecmacmillen/.dbt/profiles.yml
+03:18:44.408048 [info ]: Validating profile inputs, adapters, and connection
+
+03:18:44.408309 [info ]: dbt-fusion 2.0.0-preview.205
+03:18:44.411753 [info ]: Started loading project
+03:18:44.429238 [info ]: Loading ~/.dbt/profiles.yml
+03:18:44.433692 [info ]: Finished loading project [  0.02s]
+03:18:44.436094 [info ]: Started debugging
+03:18:44.436330 [info ]: Debugging profile: dev
+03:18:44.436355 [info ]: Debugging dbt version: 2.0.0-preview.205
+03:18:44.436532 [info ]: Debugging platform: macos aarch64 (unix)
+03:18:44.436930 [info ]: Debugging adapter type: bigquery (remote)
+03:18:44.481900 [info ]: Debugging dependencies:
+  git: OK
+03:18:44.483900 [info ]: Debugging connection:
+  "database": "abstrat",
+  "schema": "css_src",
+  "method": "service-account",
+  "dataproc_batch": null
+03:18:48.437724 [debug]: Query executed on node unknown:
+select 1 as id
+03:18:48.440869 [info ]: Debugging connection test: OK
+03:18:48.441551 [info ]: Debugged All checks passed!
+03:18:48.442134 [info ]: Finished debugging [  4.01s]
+03:18:49.097780 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' successfully for target 'dev' [38.8s]
