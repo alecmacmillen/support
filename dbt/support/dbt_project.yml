@@ -1,4 +1,4 @@
-name: support_scores
+name: support
 
 # Make sure named profile exists in ~/.dbt/profiles.yml
 profile: support
@@ -12,14 +12,16 @@ clean-targets:
 
 seeds:
   # Builds seeds into '<your_schema_name>_raw'
-  support_scores:
+  support:
     +schema: raw
 
 models:
-  support_scores:
+  support:
     +static_analysis: strict
     # Materialize staging models as views, and marts as tables
     staging:
+      +schema: staging
       +materialized: view
     marts:
+      +schema: marts
       +materialized: table
