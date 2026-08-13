@@ -1,6 +1,7 @@
 name: support_scores
 
-profile: jaffle_shop
+# Make sure named profile exists in ~/.dbt/profiles.yml
+profile: support
 
 seed-paths: ["seeds"]
 model-paths: ["models"]

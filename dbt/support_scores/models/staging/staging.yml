@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: support
+    database: abstrat
+    schema: support
+
+    tables:
+      - name: actblue_source_extract
+      - name: contacts_contacts_myv
+      - name: contacts_survey_responses_myv
+      - name: ngp_reporting_base_table
+      - name: reg_voter_base
+      - name: survey_questions
+      - name: survey_responses
+      - name: vh_upload
