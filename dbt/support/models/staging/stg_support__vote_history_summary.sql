@@ -1,5 +1,5 @@
 WITH setup_16 AS (
-    SELECT voter_registration_num
+    SELECT voter_registration_num AS sos_id
         ,application_status
         ,ballot_status
         ,status_reason
@@ -24,7 +24,7 @@ WITH setup_16 AS (
 )
 
 , setup_18 AS (
-    SELECT voter_registration_num
+    SELECT voter_registration_num AS sos_id
         ,application_status
         ,ballot_status
         ,status_reason
@@ -49,7 +49,7 @@ WITH setup_16 AS (
 )
 
 , setup_20 AS (
-    SELECT voter_registration_num
+    SELECT voter_registration_num AS sos_id
         ,application_status
         ,ballot_status
         ,status_reason
@@ -74,7 +74,7 @@ WITH setup_16 AS (
 )
 
 , setup_22 AS (
-    SELECT voter_registration_num
+    SELECT voter_registration_num AS sos_id
         ,application_status
         ,ballot_status
         ,status_reason
