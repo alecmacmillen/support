@@ -1,28 +1,121 @@
--- Goal here is to intelligently collapse this table to just a few columns
--- of probably-relevant features, 1 observation per sos_id: 
--- number of elections voted, time since last election voted, number of
--- primaries voted, preferred vote method, preferred party
-WITH summary AS (
-    SELECT voter_reg_num
-        ,COUNT(*) AS total_elections_voted -- investigate whether this is the correct way to subset the universe of elections voted in
-        ,SUM(CASE WHEN UPPER(election_desc) LIKE '%PRIMARY%' THEN 1 ELSE 0 END) AS total_primaries_voted
-        ,SUM(CASE WHEN voted_party_desc = 'DEMOCRATIC' THEN 1 ELSE 0 END) AS elections_voted_democratic
-        ,SUM(CASE WHEN voted_party_desc = 'REPUBLICAN' THEN 1 ELSE 0 END) AS elections_voted_republican
-        ,SUM(CASE WHEN voted_party_desc NOT IN ('DEMOCRATIC', 'REPUBLICAN') THEN 1 ELSE 0 END) AS elections_voted_other
-    FROM abstrat.support.vh_upload
-    GROUP BY 1
+WITH setup_16 AS (
+    SELECT voter_registration_num
+        ,application_status
+        ,ballot_status
+        ,status_reason
+        ,application_date
+        ,ballot_issued_date
+        ,ballot_return_date
+        ,ballot_style
+        ,challenged_provisional
+        ,ROW_NUMBER() OVER (
+            PARTITION BY voter_registration_num
+            ORDER BY 
+                CASE WHEN ballot_status = 'A' THEN 1
+                    WHEN ballot_status IN ('C','R') THEN 2
+                    WHEN application_status = 'A' THEN 3
+                    WHEN application_status = 'R' THEN 4
+                    ELSE 5 END
+            ,ballot_return_date DESC NULLS LAST
+            ,ballot_issued_date DESC NULLS LAST
+            ,application_date DESC NULLS LAST
+        ) AS record_priority
+    FROM abstrat.support.statewide_2016
 )
 
-, cycle_history AS (
-    SELECT voter_reg_num
-        ,MAX(EXTRACT(YEAR FROM PARSE_DATE('%m/%d/%Y', election_lbl))) AS most_recent_cycle_voted
-    FROM abstrat.support.vh_upload
-    WHERE election_lbl LIKE '%/%/%'
-        AND election_lbl NOT LIKE '%2024%'
-    GROUP BY 1
+, setup_18 AS (
+    SELECT voter_registration_num
+        ,application_status
+        ,ballot_status
+        ,status_reason
+        ,application_date
+        ,ballot_issued_date
+        ,ballot_return_date
+        ,ballot_style
+        ,challenged_provisional
+        ,ROW_NUMBER() OVER (
+            PARTITION BY voter_registration_num
+            ORDER BY 
+                CASE WHEN ballot_status = 'A' THEN 1
+                    WHEN ballot_status IN ('C','R') THEN 2
+                    WHEN application_status = 'A' THEN 3
+                    WHEN application_status = 'R' THEN 4
+                    ELSE 5 END
+            ,ballot_return_date DESC NULLS LAST
+            ,ballot_issued_date DESC NULLS LAST
+            ,application_date DESC NULLS LAST
+        ) AS record_priority
+    FROM abstrat.support.statewide_2018
 )
 
-SELECT s.*
-    ,c.most_recent_cycle_voted
-FROM summary s
-    LEFT JOIN cycle_history c USING (voter_reg_num)
+, setup_20 AS (
+    SELECT voter_registration_num
+        ,application_status
+        ,ballot_status
+        ,status_reason
+        ,application_date
+        ,ballot_issued_date
+        ,ballot_return_date
+        ,ballot_style
+        ,challenged_provisional
+        ,ROW_NUMBER() OVER (
+            PARTITION BY voter_registration_num
+            ORDER BY 
+                CASE WHEN ballot_status = 'A' THEN 1
+                    WHEN ballot_status IN ('C','R') THEN 2
+                    WHEN application_status = 'A' THEN 3
+                    WHEN application_status = 'R' THEN 4
+                    ELSE 5 END
+            ,ballot_return_date DESC NULLS LAST
+            ,ballot_issued_date DESC NULLS LAST
+            ,application_date DESC NULLS LAST
+        ) AS record_priority
+    FROM abstrat.support.statewide_2020
+)
+
+, setup_22 AS (
+    SELECT voter_registration_num
+        ,application_status
+        ,ballot_status
+        ,status_reason
+        ,application_date
+        ,ballot_issued_date
+        ,ballot_return_date
+        ,ballot_style
+        ,challenged_provisional
+        ,ROW_NUMBER() OVER (
+            PARTITION BY voter_registration_num
+            ORDER BY 
+                CASE WHEN ballot_status = 'A' THEN 1
+                    WHEN ballot_status IN ('C','R') THEN 2
+                    WHEN application_status = 'A' THEN 3
+                    WHEN application_status = 'R' THEN 4
+                    ELSE 5 END
+            ,ballot_return_date DESC NULLS LAST
+            ,ballot_issued_date DESC NULLS LAST
+            ,application_date DESC NULLS LAST
+        ) AS record_priority
+    FROM abstrat.support.statewide_2022
+)
+
+SELECT *
+FROM setup_16
+WHERE record_priority = 1
+
+UNION ALL
+
+SELECT *
+FROM setup_18
+WHERE record_priority = 1
+
+UNION ALL
+
+SELECT *
+FROM setup_20
+WHERE record_priority = 1
+
+UNION ALL
+
+SELECT *
+FROM setup_22
+WHERE record_priority = 1
