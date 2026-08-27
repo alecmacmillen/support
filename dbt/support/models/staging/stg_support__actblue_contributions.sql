@@ -12,5 +12,5 @@ SELECT id AS actblue_contribution_id
     ,lineitems_amount AS actblue_amount
     ,lineitems_recurringamount AS actblue_recurring_amount
     ,DATE(lineitems_paidat) AS actblue_date_received
-FROM abstrat.support.actblue_source_extract
+FROM {{ source('support', 'actblue_source_extract') }}
 WHERE donor_state = 'GA'

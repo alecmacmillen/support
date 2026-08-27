@@ -20,4 +20,4 @@ SELECT person_id
     ,us_cong_district_latest
     ,state_senate_district_latest
     ,state_house_district_latest
-FROM abstrat.support.reg_voter_base
+FROM {{ source('support', 'reg_voter_base') }}

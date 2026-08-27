@@ -20,7 +20,7 @@ WITH setup_16 AS (
             ,ballot_issued_date DESC NULLS LAST
             ,application_date DESC NULLS LAST
         ) AS record_priority_16
-    FROM abstrat.support.statewide_2016
+    FROM {{ source('support', 'statewide_2016') }}
 )
 
 , setup_18 AS (
@@ -45,7 +45,7 @@ WITH setup_16 AS (
             ,ballot_issued_date DESC NULLS LAST
             ,application_date DESC NULLS LAST
         ) AS record_priority_18
-    FROM abstrat.support.statewide_2018
+    FROM {{ source('support', 'statewide_2018') }}
 )
 
 , setup_20 AS (
@@ -70,7 +70,7 @@ WITH setup_16 AS (
             ,ballot_issued_date DESC NULLS LAST
             ,application_date DESC NULLS LAST
         ) AS record_priority_20
-    FROM abstrat.support.statewide_2020
+    FROM {{ source('support', 'statewide_2020') }}
 )
 
 , setup_22 AS (
@@ -95,7 +95,7 @@ WITH setup_16 AS (
             ,ballot_issued_date DESC NULLS LAST
             ,application_date DESC NULLS LAST
         ) AS record_priority_22
-    FROM abstrat.support.statewide_2022
+    FROM {{ source('support', 'statewide_2022') }}
 )
 
 SELECT COALESCE(s1.sos_id, s2.sos_id, s3.sos_id, s4.sos_id) AS sos_id

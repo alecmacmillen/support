@@ -1,0 +1,31 @@
+# Examples of the 4 generic tests: unique, not_null, accepted_values, relationships
+models:
+  - name: stg_support__vote_history_summary
+    columns:
+      - name: sos_id
+        data_tests:
+          # test to make sure sos_id is unique and not null
+          - unique
+          - not_null
+          # test to make sure every sos_id in vhs is also in rvb
+          - relationships:
+              arguments:
+                to: ref('stg_support__voter_file_base')
+                field: sos_id
+  - name: stg_support__contacts_survey_responses
+    columns:
+      - name: myv_van_id
+        data_tests:
+          - unique
+          - not_null
+      - name: survey_question_id
+        # Test to make sure only listed values are found in survey_question_id col
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['514051', '517214']
+  - name: stg_support__voter_file_base
+    columns:
+      - name: myv_van_id
+        data_tests:
+          - not_null

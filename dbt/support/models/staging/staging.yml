@@ -4,13 +4,25 @@ sources:
   - name: support
     database: abstrat
     schema: support
-
     tables:
       - name: actblue_source_extract
       - name: contacts_contacts_myv
       - name: contacts_survey_responses_myv
+        config:
+          freshness:
+            warn_after:
+              count: 24
+              period: day
+            error_after:
+              count: 48
+              period: day
+          # loaded_at_field: datetime_canvassed
       - name: ngp_reporting_base_table
       - name: reg_voter_base
       - name: survey_questions
       - name: survey_responses
       - name: vh_upload
+      - name: statewide_2016
+      - name: statewide_2018
+      - name: statewide_2020
+      - name: statewide_2022
